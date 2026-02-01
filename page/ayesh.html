@@ -37,20 +37,54 @@
       10% { opacity: 1; }
       100% { transform: translateY(-110vh); opacity: 0; }
     }
+    .play-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      cursor: pointer;
+    }
+    .play-overlay.hidden { display: none; }
+    .play-btn {
+      padding: 16px 32px;
+      font-size: 20px;
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .play-btn:hover { background: #ff6b8a; }
   </style>
 </head>
 <body>
+
+<div class="play-overlay" id="playOverlay">
+  <button class="play-btn" id="playBtn">🎵 Click to play music</button>
+</div>
 
 <div class="msg">
   I love you, Daood<br>
   you are the best thing of my life 💖💖
 </div>
 
-<audio autoplay loop>
+<audio id="bgAudio" loop>
   <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2f6fdfc3f5.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+  const audio = document.getElementById("bgAudio");
+  const overlay = document.getElementById("playOverlay");
+  function startMusic() {
+    audio.play().catch(function() {});
+    overlay.classList.add("hidden");
+  }
+  document.getElementById("playBtn").addEventListener("click", startMusic);
+  overlay.addEventListener("click", startMusic);
+
   function createHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
